@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:5001/api' 
+    apiUrl: 'https://mean-stack-429u.onrender.com/api' 
 };
