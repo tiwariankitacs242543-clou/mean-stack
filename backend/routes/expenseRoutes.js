@@ -6,12 +6,14 @@ const {
     updateExpense,
     deleteExpense,
 } = require('../controllers/expenseController');
-const { protect } = require('../middlewares/authMiddleware');
 
-router.route('/').get(protect, getExpenses).post(protect, createExpense);
+// ❌ Removed protect middleware
+
+router.route('/').get(getExpenses).post(createExpense);
+
 router
     .route('/:id')
-    .put(protect, updateExpense)
-    .delete(protect, deleteExpense);
+    .put(updateExpense)
+    .delete(deleteExpense);
 
 module.exports = router;
