@@ -1,0 +1,60 @@
+<div class="table-responsive">
+    <table class="modern-table" *ngIf="expenses.length > 0; else noExpenses">
+        <thead>
+            <tr>
+                <th>Category</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let exp of expenses" class="table-row">
+                <td>
+                    <span class="category-badge" [ngStyle]="{'background-color': getCategoryColor(exp.category)}">
+                        <i [class]="getCategoryIcon(exp.category)"></i> {{ exp.category }}
+                    </span>
+                </td>
+
+                <td class="title-cell">
+                    <strong>{{ exp.title }}</strong>
+                    <small *ngIf="exp.description" class="desc-text">{{ exp.description }}</small>
+                </td>
+
+                <td class="amount-cell">${{ exp.amount | number:'1.2-2' }}</td>
+
+                <td class="date-cell">{{ exp.date | date:'mediumDate' }}</td>
+
+                <td class="actions-cell">
+
+                    <!-- Edit Button -->
+                    <button 
+                        class="btn-icon btn-edit" 
+                        (click)="onEdit(exp)" 
+                        title="Edit Expense">
+                        <i class="fas fa-edit"></i>
+                    </button>
+
+                    <!-- Delete Button -->
+                    <button 
+                        class="btn-icon btn-delete" 
+                        (click)="onDelete(exp._id!)" 
+                        title="Delete Expense">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #noExpenses>
+        <div class="empty-state">
+            <div class="icon-circle">
+                <i class="fas fa-receipt"></i>
+            </div>
+            <p>No expenses recorded yet. Add one above to get started!</p>
+        </div>
+    </ng-template>
+</div>

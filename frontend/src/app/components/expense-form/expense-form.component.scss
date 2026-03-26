@@ -1,0 +1,55 @@
+.expense-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    .form-row {
+        display: flex;
+        gap: 1rem;
+
+        .form-group {
+            flex: 1;
+        }
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #fff;
+        font-family: inherit;
+        font-size: 1rem;
+        transition: all 0.3s;
+
+        &:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            background: rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.15);
+        }
+
+        option {
+            background: #1e1f2e;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    .btn {
+        margin-top: 0.5rem;
+        padding: 0.85rem 1.5rem;
+        align-self: flex-start;
+    }
+
+    @media (max-width: 600px) {
+        .form-row {
+            flex-direction: column;
+        }
+    }
+}

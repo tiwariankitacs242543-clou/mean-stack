@@ -1,0 +1,63 @@
+<div class="auth-container">
+    <div class="auth-card glass-panel">
+        <div class="auth-header">
+            <h2>Create Account</h2>
+            <p>Start tracking your expenses today</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <div class="input-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="name" formControlName="name" placeholder="Enter your name">
+                </div>
+                <div class="error-msg" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['required']">Name is required</div>
+                <div class="error-msg" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['pattern']">Name must contain letters only</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-icon">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" formControlName="email" placeholder="Enter your email" autocomplete="email">
+                </div>
+                <div class="error-msg" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">Valid email is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" formControlName="password" placeholder="Create a password (min 6 chars)">
+                </div>
+                <div class="error-msg" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">Password must be at least 6 characters and meet complexity requirements.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="input-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirm your password">
+                </div>
+                <div class="error-msg" *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.hasError('passwordMismatch')">
+                    Passwords do not match
+                </div>
+            </div>
+
+            <div class="error-alert" *ngIf="error">
+                <i class="fas fa-exclamation-circle"></i> {{ error }}
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="registerForm.invalid || isLoading">
+                <span *ngIf="!isLoading">Register</span>
+                <span *ngIf="isLoading" class="spinner"></span>
+            </button>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a routerLink="/login">Login here</a></p>
+            </div>
+        </form>
+    </div>
+</div>

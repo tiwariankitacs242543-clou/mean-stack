@@ -1,0 +1,15 @@
+<nav class="navbar">
+    <div class="navbar-brand">
+        <a routerLink="/dashboard" class="brand-logo">
+            <i class="fas fa-wallet"></i> Expense Tracker
+        </a>
+    </div>
+    <div class="navbar-menu">
+        <ng-container *ngIf="authService.user$ | async as user">
+            <span class="user-greeting">Welcome, {{ user.name }}</span>
+            <button class="btn btn-logout" (click)="onLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </ng-container>
+    </div>
+</nav>
