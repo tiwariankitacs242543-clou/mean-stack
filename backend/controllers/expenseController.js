@@ -2,19 +2,19 @@ const Expense = require('../models/Expense');
 
 // @desc    Get all expenses
 // @route   GET /api/expenses
-// @access  Private
+// @access  Public (TEMP)
 const getExpenses = async (req, res) => {
     try {
-        const expenses = await Expense.find({ user: req.user._id }).sort({ date: -1 });
+        const expenses = await Expense.find().sort({ date: -1 });
         res.json(expenses);
     } catch (error) {
-        res.status(500).json({ message: 'Server Error' });
+        res.status(500).json({ message: 'Server Error', error: error.message });
     }
 };
 
 // @desc    Create new expense
 // @route   POST /api/expenses
-// @access  Private
+// @access  Public (TEMP)
 const createExpense = async (req, res) => {
     try {
         const { title, amount, category, date, description } = req.body;
@@ -24,7 +24,6 @@ const createExpense = async (req, res) => {
         }
 
         const expense = new Expense({
-            user: req.user._id,
             title,
             amount,
             category,
@@ -42,18 +41,13 @@ const createExpense = async (req, res) => {
 
 // @desc    Update expense
 // @route   PUT /api/expenses/:id
-// @access  Private
+// @access  Public (TEMP)
 const updateExpense = async (req, res) => {
     try {
         const expense = await Expense.findById(req.params.id);
 
         if (!expense) {
             return res.status(404).json({ message: 'Expense not found' });
-        }
-
-        // Make sure user owns expense
-        if (expense.user.toString() !== req.user._id.toString()) {
-            return res.status(401).json({ message: 'User not authorized' });
         }
 
         const updatedExpense = await Expense.findByIdAndUpdate(
@@ -70,18 +64,13 @@ const updateExpense = async (req, res) => {
 
 // @desc    Delete expense
 // @route   DELETE /api/expenses/:id
-// @access  Private
+// @access  Public (TEMP)
 const deleteExpense = async (req, res) => {
     try {
         const expense = await Expense.findById(req.params.id);
 
         if (!expense) {
             return res.status(404).json({ message: 'Expense not found' });
-        }
-
-        // Make sure user owns expense
-        if (expense.user.toString() !== req.user._id.toString()) {
-            return res.status(401).json({ message: 'User not authorized' });
         }
 
         await expense.deleteOne();
