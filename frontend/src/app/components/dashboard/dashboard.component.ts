@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ExpenseFormComponent } from '../expense-form/expense-form.component';
 import { ExpenseListComponent } from '../expense-list/expense-list.component';
 import { ChartConfiguration } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { NgChartsModule } from 'ng2-charts'; // ✅ FIX
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +15,7 @@ import { BaseChartDirective } from 'ng2-charts';
     FormsModule,
     ExpenseFormComponent,
     ExpenseListComponent,
-    BaseChartDirective
+    NgChartsModule // ✅ FIX (IMPORTANT)
   ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
@@ -71,29 +71,23 @@ export class DashboardComponent implements OnInit {
   loadExpenses(): void {
     this.expenseService.getExpenses().subscribe({
       next: (data) => {
-
         this.expenses = data;
         this.filteredExpenses = data;
-
         this.calculateStats();
         this.updateChart();
-
       },
       error: (err) => console.error(err)
     });
   }
 
   filterByDate(): void {
-
     if (!this.selectedDate) {
       this.filteredExpenses = this.expenses;
     } else {
-
       this.filteredExpenses = this.expenses.filter(exp => {
         const expDate = new Date(exp.date).toISOString().substring(0,10);
         return expDate === this.selectedDate;
       });
-
     }
 
     this.calculateStats();
@@ -103,13 +97,11 @@ export class DashboardComponent implements OnInit {
   clearDateFilter(): void {
     this.selectedDate = '';
     this.filteredExpenses = this.expenses;
-
     this.calculateStats();
     this.updateChart();
   }
 
   calculateStats(): void {
-
     this.totalExpenses = this.filteredExpenses.reduce(
       (acc, curr) => acc + curr.amount,
       0
@@ -128,7 +120,6 @@ export class DashboardComponent implements OnInit {
   }
 
   updateChart(): void {
-
     const categories = [
       'Food',
       'Transport',
@@ -177,5 +168,4 @@ export class DashboardComponent implements OnInit {
       error: (err) => console.error(err)
     });
   }
-
 }
