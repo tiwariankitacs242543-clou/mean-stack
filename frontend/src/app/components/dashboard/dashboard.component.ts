@@ -64,21 +64,28 @@ export class DashboardComponent implements OnInit {
 
   constructor(private expenseService: ExpenseService) {}
 
-  ngOnInit(): void {
-    this.loadExpenses();
-  }
+ngOnInit(): void {
+  console.log("🔥 Dashboard loaded");
+  this.loadExpenses();
+}
 
-  loadExpenses(): void {
-    this.expenseService.getExpenses().subscribe({
-      next: (data) => {
-        this.expenses = data;
-        this.filteredExpenses = data;
-        this.calculateStats();
-        this.updateChart();
-      },
-      error: (err) => console.error(err)
-    });
-  }
+loadExpenses(): void {
+  console.log("📡 Calling API...");
+
+  this.expenseService.getExpenses().subscribe({
+    next: (data) => {
+      console.log("✅ Data received:", data);
+
+      this.expenses = data;
+      this.filteredExpenses = data;
+      this.calculateStats();
+      this.updateChart();
+    },
+    error: (err) => {
+      console.error("❌ API error:", err);
+    }
+  });
+}
 
   filterByDate(): void {
     if (!this.selectedDate) {
@@ -167,5 +174,7 @@ export class DashboardComponent implements OnInit {
       next: () => this.loadExpenses(),
       error: (err) => console.error(err)
     });
+
+
   }
 }
