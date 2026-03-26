@@ -17,7 +17,7 @@ export interface Expense {
   providedIn: 'root'
 })
 export class ExpenseService {
-  private apiUrl = `${environment.apiUrl}/expenses`;
+  private apiUrl = environment.apiUrl + '/api/expenses';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
