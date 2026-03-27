@@ -3,7 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
-const expenseRoutes = require('./routes/expenseRoutes'); // ← ADD THIS
+const expenseRoutes = require('./routes/expenseRoutes'); 
 
 dotenv.config();
 connectDB();
@@ -11,7 +11,10 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: [
+        'http://localhost:4200',
+        'https://mean-stack-1-594v.onrender.com'  
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
